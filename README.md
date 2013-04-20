@@ -1,6 +1,6 @@
 # NetLogo Crypto Extension
 
-This extension allows you perform cryptography in NetLogo.  Currently, it is not very full-featured, though.
+This extension allows you perform cryptography in NetLogo.  Currently, it is not very full-featured, though, as it only performs RSA encryption with a public key.
 
 ## Building
 
