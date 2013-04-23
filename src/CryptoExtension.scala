@@ -34,7 +34,7 @@ class CryptoExtension extends DefaultClassManager {
       val Seq(input, modulus, exponent) = args.toSeq map (_.getString)
       val key    = factory.generatePublic(new RSAPublicKeySpec(new BigInteger(modulus), new BigInteger(exponent)))
       val cipher = Cipher.getInstance(AlgorithmName)
-      cipher.init(Cipher.DECRYPT_MODE, key)
+      cipher.init(Cipher.ENCRYPT_MODE, key)
       new String(cipher.doFinal(input.getBytes(ByteEncoding)), ByteEncoding)
     }
 
