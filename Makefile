@@ -19,7 +19,7 @@ JAR_REPO=http://ccl.northwestern.edu/devel/
 
 $(EXT_NAME).jar $(EXT_NAME).jar.pack.gz: $(SRCS) $(COMMONS_CODEC_JAR) manifest.txt Makefile
 	mkdir -p classes
-	/home/jason/Downloads/scala-2.9.2/$(SCALA_HOME)/bin/scalac -deprecation -unchecked -encoding us-ascii -classpath $(COMMONS_CODEC_JAR)$(COLON)$(NETLOGO)/NetLogo.jar -d classes $(SRCS)
+	$(SCALA_HOME)/bin/scalac -deprecation -unchecked -encoding us-ascii -classpath $(COMMONS_CODEC_JAR)$(COLON)$(NETLOGO)/NetLogo.jar -d classes $(SRCS)
 	jar cmf manifest.txt $(EXT_NAME).jar -C classes .
 	pack200 --modification-time=latest --effort=9 --strip-debug --no-keep-file-order --unknown-attribute=strip $(EXT_NAME).jar.pack.gz $(EXT_NAME).jar
 
