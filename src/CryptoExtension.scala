@@ -9,7 +9,6 @@ class CryptoExtension extends DefaultClassManager {
   def load(primitiveManager: PrimitiveManager) {
     primitiveManager.addPrimitive("rsa-encrypt",   RSAEncrypt)
     primitiveManager.addPrimitive("base64-encode", Base64Encode)
-    primitiveManager.addPrimitive("base64-decode", Base64Decode)
   }
 
   object RSAEncrypt extends DefaultReporter {
@@ -32,11 +31,17 @@ class CryptoExtension extends DefaultClassManager {
     }
 
     override def report(args: Array[Argument], context: Context) : AnyRef = {
+
       val Seq(input, modulus, exponent) = args.toSeq map (_.getString)
       val key    = factory.generatePublic(new RSAPublicKeySpec(new BigInteger(modulus), new BigInteger(exponent)))
       val cipher = Cipher.getInstance(AlgorithmName)
       cipher.init(Cipher.ENCRYPT_MODE, key)
-      encodeBase64(cipher.doFinal(input.getBytes(ByteEncoding)))
+
+      val inBytes   = input.getBytes(ByteEncoding)
+      val encrypted = cipher.doFinal(inBytes)
+      val encoded   = encodeBase64_B2S(encrypted)
+      encoded
+
     }
 
   }
@@ -45,15 +50,7 @@ class CryptoExtension extends DefaultClassManager {
     override def getSyntax = Syntax.reporterSyntax(Array(StringType), StringType)
     override def report(args: Array[Argument], context: Context) : AnyRef = {
       val Seq(input) = args.toSeq map (_.getString)
-      encodeBase64(input.getBytes(ByteEncoding))
-    }
-  }
-
-  object Base64Decode extends DefaultReporter {
-    override def getSyntax = Syntax.reporterSyntax(Array(StringType), StringType)
-    override def report(args: Array[Argument], context: Context) : AnyRef = {
-      val Seq(input) = args.toSeq map (_.getString)
-      decodeBase64(input.getBytes(ByteEncoding))
+      encodeBase64_B2S(input.getBytes(ByteEncoding))
     }
   }
 
