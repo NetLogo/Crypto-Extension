@@ -1,5 +1,6 @@
 *.jar.pack.gz
 *.jar
 /classes
+target/
 .DS_Store
 crypto.zip

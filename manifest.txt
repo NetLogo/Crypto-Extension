@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Extension-Name: crypto
-Class-Manager: org.nlogo.extensions.crypto.CryptoExtension
-NetLogo-Extension-API-Version: 5.0
